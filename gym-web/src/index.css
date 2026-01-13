@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gym-50: #f7fee7;
+  --color-gym-100: #ecfccb;
+  --color-gym-400: #a3e635;
+  --color-gym-500: #84cc16;
+  --color-gym-brand: #bef264;
+  --color-gym-900: #0c4a6e;
+  --color-gym-dark: #0f172a;
+  --color-gym-accent: #8b5cf6;
+}
+
+/* Custom Glassmorphism Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  @apply rounded-xl p-6 transition-all duration-300 hover:bg-white/10;
+}
+
+body {
+  @apply bg-slate-900 text-white font-sans;
+}
