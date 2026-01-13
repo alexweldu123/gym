@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '../atoms/Button';
 import { Input } from '../atoms/Input';
+import { API_URL } from '../../config';
 
 interface UserModalProps {
   onClose: () => void;
@@ -31,13 +32,13 @@ export const UserModal: React.FC<UserModalProps> = ({ onClose, onSuccess, initia
     setLoading(true);
     try {
       if (initialData) {
-        await axios.put(`http://localhost:8080/api/admin/users/${initialData.id}`, {
+        await axios.put(`${API_URL}/admin/users/${initialData.id}`, {
           name: user.name, 
           email: user.email,
           role: user.role
         });
       } else {
-        await axios.post('http://localhost:8080/api/admin/users', user);
+        await axios.post(`${API_URL}/admin/users`, user);
       }
       onSuccess();
       onClose();

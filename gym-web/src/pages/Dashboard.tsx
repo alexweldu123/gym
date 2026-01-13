@@ -13,6 +13,7 @@ import { MemberModal } from '../components/organisms/MemberModal';
 import { UserModal } from '../components/organisms/UserModal';
 import { UsersTable } from '../components/organisms/UsersTable';
 import Attendance from './Attendance';
+import { API_URL } from '../config';
 
 // -- VIEWS --
 
@@ -22,9 +23,9 @@ const StatsView = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const sRes = await axios.get('http://localhost:8080/api/admin/stats');
+      const sRes = await axios.get(`${API_URL}/admin/stats`);
       setStats(sRes.data.data);
-      const cRes = await axios.get('http://localhost:8080/api/admin/attendance/chart');
+      const cRes = await axios.get(`${API_URL}/admin/attendance/chart`);
       setChartData(cRes.data.data || []);
     };
     fetchData();
@@ -68,21 +69,21 @@ const PackagesView = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const fetchPackages = async () => {
-    const res = await axios.get('http://localhost:8080/api/management/packages');
+    const res = await axios.get(`${API_URL}/management/packages`);
     setPackages(res.data.data);
   };
   useEffect(() => { fetchPackages(); }, []);
 
   const handleSave = async () => {
     if (isEditing) {
-      await axios.put(`http://localhost:8080/api/admin/packages/${form.id}`, { 
+      await axios.put(`${API_URL}/admin/packages/${form.id}`, { 
         name: form.name, 
         duration_days: Number(form.days), 
         price: Number(form.price), description: 'Web' 
       });
       setIsEditing(false);
     } else {
-      await axios.post('http://localhost:8080/api/admin/packages', { 
+      await axios.post(`${API_URL}/admin/packages`, { 
         name: form.name, 
         duration_days: Number(form.days), 
         price: Number(form.price), description: 'Web' 
@@ -99,7 +100,7 @@ const PackagesView = () => {
 
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure?')) {
-      await axios.delete(`http://localhost:8080/api/admin/packages/${id}`);
+      await axios.delete(`${API_URL}/admin/packages/${id}`);
       fetchPackages();
     }
   };
@@ -151,9 +152,9 @@ const MembersView = () => {
   const [editMemberData, setEditMemberData] = useState(null);
 
   const fetchData = async () => {
-    const mRes = await axios.get('http://localhost:8080/api/management/members');
+    const mRes = await axios.get(`${API_URL}/management/members`);
     setMembers(mRes.data.data);
-    const pRes = await axios.get('http://localhost:8080/api/management/packages');
+    const pRes = await axios.get(`${API_URL}/management/packages`);
     setPackages(pRes.data.data);
   };
   useEffect(() => { fetchData(); }, []);
@@ -196,7 +197,7 @@ const UsersView = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/api/admin/users?role=${selectedRole}`);
+      const res = await axios.get(`${API_URL}/admin/users?role=${selectedRole}`);
       setUsers(res.data.data);
     } catch (e) {
       console.error(e);

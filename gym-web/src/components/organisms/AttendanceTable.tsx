@@ -19,6 +19,8 @@ interface Attendance {
   scan_time: string;
 }
 
+import { API_URL } from '../../config';
+
 const AttendanceTable: React.FC = () => {
   const [logs, setLogs] = useState<Attendance[]>([]);
   const [total, setTotal] = useState(0);
@@ -30,7 +32,7 @@ const AttendanceTable: React.FC = () => {
   const fetchLogs = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:8080/api/management/attendance', {
+      const res = await axios.get(`${API_URL}/management/attendance`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { page, limit, start_date: startDate, end_date: endDate }
       });

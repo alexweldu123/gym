@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+ 
+import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 
 const darkTheme = createTheme({
   palette: {

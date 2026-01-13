@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from '../atoms/Card';
 import { Icons } from '../atoms/Icon';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 interface UsersTableProps {
   users: any[];
@@ -13,7 +14,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({ users, onUpdate, onEdit 
 
   const handleToggleStatus = async (user: any) => {
     try {
-      await axios.post(`http://localhost:8080/api/admin/users/${user.id}/toggle`);
+      await axios.post(`${API_URL}/admin/users/${user.id}/toggle`);
       onUpdate();
     } catch(e) { alert('Failed to toggle status'); }
   };
@@ -21,7 +22,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({ users, onUpdate, onEdit 
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`http://localhost:8080/api/admin/users/${id}`);
+        await axios.delete(`${API_URL}/admin/users/${id}`);
         onUpdate();
       } catch (e) { alert('Failed to delete user'); }
     }

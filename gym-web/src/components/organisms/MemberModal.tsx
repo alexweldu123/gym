@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from '../atoms/Button';
 import { Input } from '../atoms/Input';
 import { Icons } from '../atoms/Icon';
+import { API_URL } from '../../config';
 
 interface MemberModalProps {
   onClose: () => void;
@@ -21,7 +22,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({ onClose, onSuccess, in
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const res = await axios.get('http://localhost:8080/api/management/packages');
+        const res = await axios.get(`${API_URL}/management/packages`);
         setPackages(res.data.data);
       } catch (e) {
         console.error('Failed to fetch packages', e);
@@ -59,7 +60,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({ onClose, onSuccess, in
     try {
       if (initialData) {
         // Edit Mode
-        await axios.put(`http://localhost:8080/api/admin/members/${initialData.id}`, {
+        await axios.put(`${API_URL}/admin/members/${initialData.id}`, {
           name: member.name, 
           email: member.email,
           package_id: member.packageId ? Number(member.packageId) : null
@@ -76,7 +77,7 @@ export const MemberModal: React.FC<MemberModalProps> = ({ onClose, onSuccess, in
         if (member.packageId) formData.append('package_id', member.packageId);
         if (member.file) formData.append('profile_picture', member.file);
 
-        await axios.post('http://localhost:8080/api/auth/register', formData, {
+        await axios.post(`${API_URL}/auth/register`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       }

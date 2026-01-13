@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../atoms/Card';
 import { Icons } from '../atoms/Icon';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 interface Member {
   id: number;
@@ -37,7 +38,7 @@ export const MembersTable: React.FC<MembersTableProps> = ({ members, packages, o
   const handleSubscribe = async () => {
     if (!selectedMember || !selectedPackage) return;
     try {
-      await axios.post('http://localhost:8080/api/admin/members/subscribe', {
+      await axios.post(`${API_URL}/admin/members/subscribe`, {
         member_id: selectedMember, package_id: selectedPackage
       });
       setSelectedMember(null);
@@ -48,7 +49,7 @@ export const MembersTable: React.FC<MembersTableProps> = ({ members, packages, o
   const handleDelete = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this member?')) {
       try {
-        await axios.delete(`http://localhost:8080/api/admin/members/${id}`);
+        await axios.delete(`${API_URL}/admin/members/${id}`);
         onUpdate();
       } catch (e) { alert('Failed to delete member'); }
     }
@@ -113,11 +114,11 @@ export const MembersTable: React.FC<MembersTableProps> = ({ members, packages, o
                   <td className="p-4">
                      <div 
                         className="w-10 h-10 rounded-full bg-slate-800 overflow-hidden ring-1 ring-white/10 cursor-pointer hover:ring-2 hover:ring-gym-brand transition-all"
-                        onClick={() => m.profile_picture && setViewImage(`http://localhost:8080${m.profile_picture}`)}
+                        onClick={() => m.profile_picture && setViewImage(`${API_URL}${m.profile_picture}`)}
                      >
                         {m.profile_picture ? (
                             <img 
-                                src={`http://localhost:8080${m.profile_picture}`} 
+                                src={`${API_URL}${m.profile_picture}`} 
                                 alt={m.name} 
                                 className="w-full h-full object-cover" 
                             />
